@@ -1,2 +1,64 @@
 # soc-master-lab
 Hands-on SOC lab built with Elasticsearch, Logstash, Kibana, Filebeat, Suricata and Ubuntu.
+======================================================================
+               SOC MASTER LAB PLATFORM · ENTERPRISE EDITION
+         Build • Configure • Detect • Troubleshoot • Investigate
+======================================================================
+
+WELCOME TO THE SOC MASTER LAB PLATFORM:
+A complete hands-on interactive cybersecurity training platform teaching
+beginners how to build and operate an enterprise security monitoring pipeline:
+Ubuntu Server → Suricata IDS → eve.json → Filebeat → Logstash → Elasticsearch → Kibana
+
+HOW TO RUN THE PLATFORM ON YOUR MACHINE:
+
+METHOD 1: Quick Run with Python (Recommended - Zero Setup)
+----------------------------------------------------------
+1. Open a terminal or Command Prompt in this folder.
+2. Run:
+      python desktop_launcher.py
+      (or double-click start-shadowxlab.bat)
+
+   This will automatically:
+   - Check local hypervisor & dependencies
+   - Start the FastAPI backend and web server on port 8000
+   - Launch the SOC MASTER LAB web application and open your default browser!
+
+
+METHOD 2: Running with Node.js / Vite (Development Mode)
+--------------------------------------------------------
+1. Open a terminal in this folder.
+2. Run:
+      npm run dev
+3. Open http://localhost:3000 in your browser.
+
+
+METHOD 3: Built Web Application Direct Access
+---------------------------------------------
+The pre-compiled production build is ready in the dist/ directory.
+You can serve it with any web server (Python, Nginx, or Caddy):
+      python -m http.server 8000 --directory dist
+Open http://localhost:8000 in your browser!
+
+
+PLATFORM MODULE REFERENCE:
+- 01 Prerequisites          : Host sizing, network discovery, OpenJDK 17, Elastic APT repo
+- 02 Elasticsearch          : Shards, indices, port 9200, elasticsearch.yml, 5 error labs, 10 practical labs
+- 03 Logstash               : Input/Filter/Output, beats.conf, grok, 7 error labs, pipeline tests
+- 04 Kibana                 : Port 5601, Discover, KQL, Dashboards, 4-tier diagnostic model
+- 05 Filebeat               : Harvesters, registry pointer, YAML indentation, dual architectures
+- 06 Suricata IDS           : AF_PACKET promiscuous sniffer, rules, eve.json, suricata-update
+- 07 Harden & Verify        : Full verification audit, UFW firewall rules, SSH hardening
+- 08 Detection Labs         : Controlled Port Scans, SSH brute force, SQL injection
+- 09 Troubleshooting Center : 10-step philosophy, diagnostic tree, 12 searchable runbooks
+- 10 Final SOC Challenge    : 14-step simulated incident investigation & report generator
+
+INTERACTIVE UTILITIES:
+- Trace 1 Event Pipeline    : End-to-end data flow from packet to Kibana
+- Port & Service Map        : Interactive port matrix (22, 5044, 5601, 9200)
+- Configuration Library     : Validated templates for all /etc/ configs
+- Interactive Terminal      : In-browser simulated terminal for real Linux & Elastic commands
+- SOC Interview Mode        : Real interview questions with intent, model answers, and pitfalls
+- LinkedIn & README Export  : Dynamic progress post & GitHub README generator
+- Lab Settings              : Dynamic variable replacement (<SIEM_IP>, <KALI_IP>, <INTERFACE>)
+======================================================================
