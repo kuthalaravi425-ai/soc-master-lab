@@ -1,0 +1,87 @@
+import { PortDef } from '../types/socMasterLab';
+
+export const PORT_MAP_ITEMS: PortDef[] = [
+  {
+    component: 'SSH Daemon',
+    port: 22,
+    protocol: 'TCP',
+    purpose: 'Secure remote terminal administration of the Linux host and hypervisor management',
+    configFile: '/etc/ssh/sshd_config',
+    verificationCommand: 'sudo ss -tulpn | grep :22',
+    troubleshootingCommands: [
+      'sudo systemctl status ssh',
+      'sudo journalctl -u ssh -n 25 --no-pager',
+      'sudo sshd -t',
+    ],
+    relatedComponents: ['Ubuntu Host OS', 'Terminal Console'],
+  },
+  {
+    component: 'Elasticsearch REST API',
+    port: 9200,
+    protocol: 'HTTPS',
+    purpose: 'Core REST API endpoint for document queries, index creation, and cluster management',
+    configFile: '/etc/elasticsearch/elasticsearch.yml',
+    verificationCommand: 'sudo ss -tulpn | grep 9200',
+    troubleshootingCommands: [
+      'curl -k -u elastic:YOUR_PASSWORD https://localhost:9200',
+      'sudo journalctl -u elasticsearch -n 50 --no-pager',
+      'curl -k -u elastic:YOUR_PASSWORD https://localhost:9200/_cluster/health?pretty',
+    ],
+    relatedComponents: ['Kibana', 'Logstash', 'Filebeat'],
+  },
+  {
+    component: 'Elasticsearch Cluster Transport',
+    port: 9300,
+    protocol: 'TCP',
+    purpose: 'Internal binary transport port used for inter-node clustering and shard replication',
+    configFile: '/etc/elasticsearch/elasticsearch.yml',
+    verificationCommand: 'sudo ss -tulpn | grep 9300',
+    troubleshootingCommands: [
+      'sudo ss -tulpn | grep 9300',
+      'curl -k -u elastic:YOUR_PASSWORD https://localhost:9200/_nodes/transport?pretty',
+    ],
+    relatedComponents: ['Elasticsearch Cluster Nodes'],
+  },
+  {
+    component: 'Logstash Beats Input',
+    port: 5044,
+    protocol: 'TCP',
+    purpose: 'High-throughput TCP receiver for Filebeat, Metricbeat, and Packetbeat shippers',
+    configFile: '/etc/logstash/conf.d/01-beats.conf',
+    verificationCommand: 'sudo ss -tulpn | grep 5044',
+    troubleshootingCommands: [
+      'nc -zv localhost 5044',
+      'sudo journalctl -u logstash -n 50 --no-pager',
+      'sudo /usr/share/logstash/bin/logstash -f /etc/logstash/conf.d/01-beats.conf --config.test_and_exit',
+    ],
+    relatedComponents: ['Filebeat', 'Logstash Pipeline'],
+  },
+  {
+    component: 'Kibana Web Interface',
+    port: 5601,
+    protocol: 'HTTP',
+    purpose: 'Browser-accessible GUI console for Discover, visual dashboards, KQL search, and SIEM apps',
+    configFile: '/etc/kibana/kibana.yml',
+    verificationCommand: 'sudo ss -tulpn | grep 5601',
+    troubleshootingCommands: [
+      'curl -I http://localhost:5601/api/status',
+      'sudo journalctl -u kibana -n 50 --no-pager',
+      'sudo ufw status | grep 5601',
+    ],
+    relatedComponents: ['Elasticsearch', 'Analyst Web Browser'],
+  },
+  {
+    component: 'Suricata Raw Sniffer',
+    port: 'Promiscuous Socket (N/A)',
+    protocol: 'TCP',
+    purpose: 'Binds kernel AF_PACKET raw promiscuous socket to inspect wire packets without opening a TCP port',
+    configFile: '/etc/suricata/suricata.yaml',
+    verificationCommand: 'sudo suricata -T -c /etc/suricata/suricata.yaml',
+    troubleshootingCommands: [
+      'sudo tail -f /var/log/suricata/eve.json',
+      'sudo tail -n 25 /var/log/suricata/suricata.log',
+      'ip -brief link show',
+    ],
+    relatedComponents: ['Network Interface (<INTERFACE>)', 'eve.json'],
+  },
+];
